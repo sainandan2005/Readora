@@ -367,10 +367,12 @@ export async function processBook(gutenbergId: number): Promise<void> {
     }));
     await Chapter.insertMany(chapterDocs);
 
-    // Update book status
+    // Update book status and release the raw HTML — it is only needed
+    // during ingestion and would otherwise bloat storage
     book.chapterCount = chapters.length;
     book.status = "ready";
     book.coverImageUrl = metadata.coverImageUrl || book.coverImageUrl;
+    book.rawContent = "";
     await book.save();
   } catch (error) {
     book.status = "failed";

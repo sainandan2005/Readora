@@ -2,6 +2,7 @@ import Link from "next/link";
 import { connectDB } from "@/lib/db";
 import Book from "@/models/Book";
 import ImportJob from "@/models/ImportJob";
+import BookManager from "@/components/admin/BookManager";
 
 export default async function AdminPage() {
   await connectDB();
@@ -63,22 +64,34 @@ export default async function AdminPage() {
                     {job.processedCount}/{job.totalCount} processed
                   </span>
                 </div>
-                <span
-                  className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${
-                    job.status === "completed"
-                      ? "bg-[var(--accent-soft)] text-[var(--accent)]"
-                      : job.status === "failed"
-                      ? "bg-[var(--destructive)]/10 text-[var(--destructive)]"
-                      : "bg-[var(--gold)]/10 text-[var(--gold)]"
-                  }`}
-                >
-                  {job.status}
-                </span>
+                <div className="flex items-center gap-3">
+                  {(job.status === "pending" || job.status === "processing") && (
+                    <Link
+                      href={`/admin/import?jobId=${job._id.toString()}`}
+                      className="rounded-full bg-[var(--gold)] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white transition-opacity hover:opacity-90"
+                    >
+                      Resume
+                    </Link>
+                  )}
+                  <span
+                    className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${
+                      job.status === "completed"
+                        ? "bg-[var(--accent-soft)] text-[var(--accent)]"
+                        : job.status === "failed"
+                        ? "bg-[var(--destructive)]/10 text-[var(--destructive)]"
+                        : "bg-[var(--gold)]/10 text-[var(--gold)]"
+                    }`}
+                  >
+                    {job.status}
+                  </span>
+                </div>
               </div>
             ))}
           </div>
         )}
       </div>
+
+      <BookManager />
     </div>
   );
 }

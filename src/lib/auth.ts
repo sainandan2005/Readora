@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs";
 import { connectDB } from "@/lib/db";
 import User from "@/models/User";
 import { authConfig } from "@/lib/auth.config";
+import { checkRateLimit } from "@/lib/rate-limit";
+import { logger } from "@/lib/logger";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
@@ -19,9 +21,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return null;
         }
 
+        // Throttle repeated attempts against the same account
+        const email = String(credentials.email).toLowerCase();
+        const { allowed } = checkRateLimit(`login:${email}`, {
+          windowMs: 300_000,
+          max: 10,
+        });
+        if (!allowed) {
+          logger.warn("Login rate limit hit.", { email });
+          return null;
+        }
+
         await connectDB();
 
-        const user = await User.findOne({ email: credentials.email });
+        const user = await User.findOne({ email });
         if (!user) {
           return null;
         }
