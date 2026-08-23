@@ -19,7 +19,11 @@ const ImportJobSchema = new Schema<IImportJob>(
       },
     ],
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    // `errors` is a deliberate legacy field name; keep it but silence Mongoose's warning
+    suppressReservedKeysWarning: true,
+  }
 );
 
 const ImportJob: Model<IImportJob> =

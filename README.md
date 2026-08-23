@@ -2,6 +2,17 @@
 
 *A quiet home for public-domain books.*
 
+<p align="center">
+  <img src="docs/screenshots/home.png" alt="Readora landing page" width="100%" />
+</p>
+<p align="center">
+  <img src="docs/screenshots/library.png" alt="Library with book covers and reading progress" width="49%" />
+  <img src="docs/screenshots/reader.png" alt="Distraction-free reader" width="49%" />
+</p>
+<p align="center">
+  <img src="docs/screenshots/book-detail.png" alt="Book detail with chapter list" width="49%" />
+</p>
+
 Readora takes free ebooks from [Project Gutenberg](https://www.gutenberg.org), turns their messy 100-year-old HTML into clean chapters, and serves them in a distraction-free reader that remembers exactly where you stopped reading — down to the scroll position.
 
 ---
