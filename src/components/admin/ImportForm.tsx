@@ -58,7 +58,7 @@ export default function ImportForm({ onJobCreated }: ImportFormProps) {
       <div>
         <label
           htmlFor="gutenberg-ids"
-          className="block text-xs font-bold uppercase tracking-widest mb-2"
+          className="mb-2 block text-xs font-semibold tracking-wide text-[var(--muted-foreground)]"
         >
           Gutenberg IDs
         </label>
@@ -68,15 +68,15 @@ export default function ImportForm({ onJobCreated }: ImportFormProps) {
           onChange={(e) => setInput(e.target.value)}
           placeholder={"1342\n84\n11\n1661"}
           rows={6}
-          className="w-full px-4 py-3 border-2 border-[var(--border)] bg-[var(--background)] focus:outline-none focus:border-[var(--accent)] transition-colors duration-200 font-mono text-sm"
+          className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 font-mono text-sm transition-all duration-200 focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/25"
         />
-        <p className="text-[10px] uppercase tracking-widest text-[var(--muted-foreground)] mt-2">
-          Enter one ID per line or comma-separated
+        <p className="mt-2 text-xs text-[var(--muted-foreground)]/80">
+          One ID per line or comma-separated
         </p>
       </div>
 
       {error && (
-        <p className="text-sm text-[var(--accent)] font-bold">{error}</p>
+        <p className="text-sm font-medium text-[var(--destructive)]">{error}</p>
       )}
 
       <Button type="submit" isLoading={loading}>

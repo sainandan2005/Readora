@@ -34,56 +34,61 @@ export default function StatsPage() {
   }, [fetchStats]);
 
   return (
-    <main className="max-w-3xl mx-auto px-6 py-8 lg:px-8 lg:py-12">
-      <div className="flex items-end justify-between mb-8 border-b-4 border-[var(--border)] pb-4">
-        <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter">
-          Reading Stats
-        </h1>
+    <main className="mx-auto max-w-4xl px-6 py-10 lg:px-8 lg:py-14">
+      <div className="mb-10 flex items-end justify-between">
+        <div>
+          <p className="mb-1 text-xs font-semibold uppercase tracking-[0.25em] text-[var(--gold)]">
+            Your journey
+          </p>
+          <h1 className="font-display text-4xl font-semibold tracking-tight md:text-5xl">
+            Reading Stats
+          </h1>
+        </div>
         <Link
           href="/library"
-          className="text-xs font-bold uppercase tracking-widest text-[var(--accent)] hover:underline"
+          className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-5 py-2.5 text-sm font-medium transition-colors duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
         >
-          Library &rarr;
+          Library →
         </Link>
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
           {Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} className="animate-pulse p-8 border-2 border-[var(--muted)]">
-              <div className="h-10 bg-[var(--muted)] w-16 mb-2" />
-              <div className="h-4 bg-[var(--muted)] w-24" />
+            <div key={i} className="animate-pulse rounded-2xl border border-[var(--border)] p-8">
+              <div className="h-10 w-16 rounded bg-[var(--muted)]" />
+              <div className="mt-3 h-3 w-24 rounded bg-[var(--muted)]" />
             </div>
           ))}
         </div>
       ) : stats ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          <StatCard label="Books Completed" value={stats.booksCompleted} />
-          <StatCard label="In Progress" value={stats.booksInProgress} />
-          <StatCard label="Chapters Read" value={stats.totalChaptersRead} />
-          <StatCard label="Total Books Started" value={stats.totalBooks} />
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+          <StatCard label="Books completed" value={stats.booksCompleted} />
+          <StatCard label="In progress" value={stats.booksInProgress} />
+          <StatCard label="Chapters read" value={stats.totalChaptersRead} />
+          <StatCard label="Books started" value={stats.totalBooks} />
           <StatCard
-            label="Reading Streak"
+            label="Reading streak"
             value={stats.currentStreak}
             suffix={stats.currentStreak === 1 ? " day" : " days"}
           />
         </div>
       ) : (
-        <p className="text-xs uppercase tracking-widest text-[var(--muted-foreground)] text-center py-16">
+        <p className="py-16 text-center text-sm text-[var(--muted-foreground)]">
           Could not load stats. Try again later.
         </p>
       )}
 
       {stats && stats.totalBooks === 0 && (
-        <div className="text-center py-16 border-2 border-[var(--border)] mt-8">
-          <p className="text-xs uppercase tracking-widest text-[var(--muted-foreground)] mb-6">
-            No reading activity yet.
+        <div className="mt-8 rounded-2xl border border-dashed border-[var(--border-strong)] py-16 text-center">
+          <p className="font-display mb-6 text-lg italic text-[var(--muted-foreground)]">
+            Every great reader started somewhere.
           </p>
           <Link
             href="/library"
-            className="px-8 py-4 bg-[var(--foreground)] text-[var(--background)] font-bold uppercase tracking-wide text-xs hover:bg-[var(--accent)] transition-colors duration-200 inline-block"
+            className="inline-block rounded-full bg-[var(--accent)] px-8 py-3.5 text-sm font-semibold text-[var(--accent-foreground)] transition-all duration-200 hover:bg-[var(--accent-hover)]"
           >
-            Start Reading
+            Pick your first book
           </Link>
         </div>
       )}
@@ -101,16 +106,16 @@ function StatCard({
   suffix?: string;
 }) {
   return (
-    <div className="p-8 border-2 border-[var(--border)] group hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors duration-200">
-      <p className="text-4xl md:text-5xl font-black tracking-tighter group-hover:scale-105 transition-transform duration-200 origin-left">
+    <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-7 shadow-[var(--shadow-sm)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]">
+      <p className="font-display text-4xl font-semibold tracking-tight md:text-5xl">
         {value}
         {suffix && (
-          <span className="text-sm font-bold uppercase tracking-widest text-[var(--muted-foreground)] group-hover:text-[var(--background)] ml-1 transition-colors duration-200">
+          <span className="ml-1 text-xs font-medium uppercase tracking-wide text-[var(--muted-foreground)]">
             {suffix}
           </span>
         )}
       </p>
-      <p className="text-xs uppercase tracking-widest text-[var(--muted-foreground)] group-hover:text-[var(--background)] mt-2 transition-colors duration-200">
+      <p className="mt-2 text-xs font-medium uppercase tracking-wider text-[var(--muted-foreground)]">
         {label}
       </p>
     </div>

@@ -49,24 +49,22 @@ export default function ChapterDrawer({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/30">
+    <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm">
       <div
         ref={drawerRef}
-        className="absolute left-0 top-0 h-full w-72 max-w-[80vw] bg-[var(--background)] border-r-4 border-[var(--border)] overflow-y-auto"
+        className="absolute left-0 top-0 h-full w-80 max-w-[85vw] overflow-y-auto border-r border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-lg)]"
       >
-        <div className="flex items-center justify-between p-4 border-b-4 border-[var(--border)]">
-          <h2 className="font-black uppercase tracking-tight text-sm">
-            Table of Contents
-          </h2>
+        <div className="sticky top-0 flex items-center justify-between border-b border-[var(--border)] bg-[var(--surface)] px-5 py-4">
+          <h2 className="font-display text-lg font-semibold italic">Contents</h2>
           <button
             onClick={onClose}
-            className="text-sm px-2 py-1 font-bold hover:text-[var(--accent)] transition-colors duration-200"
+            className="rounded-full px-2.5 py-1 text-xl leading-none text-[var(--muted-foreground)] transition-colors duration-200 hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
           >
             &times;
           </button>
         </div>
 
-        <nav className="p-2">
+        <nav className="p-3">
           {chapters.map((ch) => (
             <button
               key={ch.chapterNumber}
@@ -75,16 +73,16 @@ export default function ChapterDrawer({
                 onSelect(ch.chapterNumber);
                 onClose();
               }}
-              className={`w-full text-left px-3 py-2.5 text-sm transition-colors duration-200 ${
+              className={`flex w-full items-baseline rounded-xl px-3 py-2.5 text-left text-sm transition-colors duration-150 ${
                 ch.chapterNumber === currentChapter
-                  ? "border-l-4 border-l-[var(--accent)] font-bold bg-[var(--muted)]"
-                  : "hover:bg-[var(--foreground)] hover:text-[var(--background)]"
+                  ? "bg-[var(--accent-soft)] font-semibold text-[var(--accent)]"
+                  : "text-[var(--foreground)] hover:bg-[var(--muted)]"
               }`}
             >
-              <span className="text-[var(--muted-foreground)] mr-2 text-xs uppercase tracking-widest">
-                {String(ch.chapterNumber).padStart(2, "0")}.
+              <span className="font-display mr-2.5 w-6 shrink-0 text-xs italic text-[var(--muted-foreground)]/70">
+                {String(ch.chapterNumber).padStart(2, "0")}
               </span>
-              {ch.title || `Chapter ${ch.chapterNumber}`}
+              <span className="flex-1">{ch.title || `Chapter ${ch.chapterNumber}`}</span>
             </button>
           ))}
         </nav>

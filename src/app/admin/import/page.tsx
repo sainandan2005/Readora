@@ -14,10 +14,10 @@ export default function ImportPage() {
   return (
     <div className="space-y-10">
       <div>
-        <h2 className="text-2xl font-black uppercase tracking-tighter mb-1">
+        <h2 className="font-display mb-1 text-3xl font-semibold tracking-tight">
           Import Books
         </h2>
-        <p className="text-xs uppercase tracking-widest text-[var(--muted-foreground)]">
+        <p className="text-sm text-[var(--muted-foreground)]">
           Enter Project Gutenberg IDs to import books into the library.
         </p>
       </div>
@@ -26,8 +26,8 @@ export default function ImportPage() {
 
       {activeJobs.length > 0 && (
         <div className="space-y-4">
-          <h3 className="text-xs font-bold uppercase tracking-widest border-b-4 border-[var(--border)] pb-3">
-            <span className="text-[var(--accent)]">01.</span> Import Jobs
+          <h3 className="font-display border-b border-[var(--border)] pb-3 text-xl font-semibold italic text-[var(--muted-foreground)]">
+            Import jobs
           </h3>
           {activeJobs.map((jobId) => (
             <ImportStatus key={jobId} jobId={jobId} />

@@ -33,13 +33,13 @@ export default function BookshelfButton({ bookId, initialSaved }: BookshelfButto
     <button
       onClick={toggle}
       disabled={loading}
-      className={`px-6 py-3 text-sm font-bold uppercase tracking-wide transition-colors duration-200 ${
+      className={`inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 disabled:opacity-50 ${
         saved
-          ? "bg-[var(--foreground)] text-[var(--background)] border-2 border-[var(--border)]"
-          : "border-2 border-[var(--border)] hover:bg-[var(--foreground)] hover:text-[var(--background)]"
-      } disabled:opacity-50`}
+          ? "border border-[var(--accent)] bg-[var(--accent-soft)] text-[var(--accent)]"
+          : "border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
+      }`}
     >
-      {saved ? "Saved" : "Save to Bookshelf"}
+      {saved ? "✓ On your bookshelf" : "+ Save to bookshelf"}
     </button>
   );
 }

@@ -73,59 +73,61 @@ export default async function BookDetailPage({ params }: PageProps) {
     : `/book/${slug}/read?chapter=1`;
 
   return (
-    <main className="max-w-3xl mx-auto px-6 py-8 lg:px-8 lg:py-12">
+    <main className="mx-auto max-w-4xl px-6 py-10 lg:px-8 lg:py-14">
       <Link
         href="/library"
-        className="text-xs font-bold uppercase tracking-widest text-[var(--accent)] hover:underline mb-6 inline-block"
+        className="mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--muted-foreground)] transition-colors duration-200 hover:text-[var(--accent)]"
       >
-        &larr; Back to Library
+        ← Back to Library
       </Link>
 
-      <div className="flex flex-col sm:flex-row gap-8 mb-12">
-        <div className="w-48 shrink-0">
+      <div className="mb-14 flex flex-col gap-10 sm:flex-row">
+        <div className="w-48 shrink-0 mx-auto sm:mx-0">
           {book.coverImageUrl ? (
             <img
               src={book.coverImageUrl}
               alt={book.title}
-              className="w-full border-2 border-[var(--border)]"
+              className="w-full rounded-xl border border-[var(--border)] shadow-[var(--shadow-lg)]"
             />
           ) : (
-            <div className="aspect-[2/3] bg-[var(--muted)] swiss-grid-pattern border-2 border-[var(--border)] flex items-center justify-center p-4">
-              <span className="text-center text-xs font-bold uppercase tracking-widest text-[var(--muted-foreground)]">
+            <div className="flex aspect-[2/3] items-center justify-center rounded-xl bg-gradient-to-br from-[var(--accent)] to-[var(--accent-hover)] p-6 shadow-[var(--shadow-lg)]">
+              <span className="font-display text-center text-base font-semibold italic leading-snug text-[var(--accent-foreground)]">
                 {book.title}
               </span>
             </div>
           )}
         </div>
 
-        <div className="flex-1">
-          <h1 className="text-3xl md:text-4xl font-black uppercase tracking-tighter mb-1">
+        <div className="flex-1 text-center sm:text-left">
+          <h1 className="font-display mb-2 text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
             {book.title}
           </h1>
-          <p className="text-xs uppercase tracking-widest text-[var(--muted-foreground)] mb-6">
-            {book.author}
+          <p className="mb-6 text-[var(--muted-foreground)]">
+            by {book.author}
           </p>
 
           {progress && (
-            <div className="mb-6">
-              <div className="flex items-center gap-3 text-xs uppercase tracking-widest text-[var(--muted-foreground)]">
-                <span className="font-bold">{Math.round(progress.percentage)}%</span>
-                <span>&middot;</span>
-                <span>Chapter {progress.chapter} of {book.chapterCount}</span>
+            <div className="mb-7">
+              <div className="flex items-center justify-center gap-3 text-xs font-medium uppercase tracking-wider text-[var(--muted-foreground)] sm:justify-start">
+                <span>{Math.round(progress.percentage)}% read</span>
+                <span>·</span>
+                <span>
+                  Chapter {progress.chapter} of {book.chapterCount}
+                </span>
               </div>
-              <div className="w-full bg-[var(--muted)] h-1 mt-2">
+              <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-[var(--muted)]">
                 <div
-                  className="bg-[var(--accent)] h-1"
+                  className="h-full rounded-full bg-[var(--gold)] transition-[width]"
                   style={{ width: `${progress.percentage}%` }}
                 />
               </div>
             </div>
           )}
 
-          <div className="flex gap-4">
+          <div className="flex flex-wrap justify-center gap-3 sm:justify-start">
             <Link
               href={readLink}
-              className="px-8 py-4 bg-[var(--foreground)] text-[var(--background)] font-bold uppercase tracking-wide text-sm hover:bg-[var(--accent)] transition-colors duration-200"
+              className="rounded-full bg-[var(--accent)] px-8 py-3.5 text-sm font-semibold text-[var(--accent-foreground)] shadow-[var(--shadow-sm)] transition-all duration-200 hover:bg-[var(--accent-hover)] hover:shadow-[var(--shadow-md)]"
             >
               {progress ? "Continue Reading" : "Start Reading"}
             </Link>
@@ -135,7 +137,7 @@ export default async function BookDetailPage({ params }: PageProps) {
             />
           </div>
 
-          <p className="text-xs uppercase tracking-widest text-[var(--muted-foreground)] mt-6">
+          <p className="mt-6 text-xs font-medium uppercase tracking-wider text-[var(--muted-foreground)]/80">
             {book.chapterCount} chapter{book.chapterCount !== 1 ? "s" : ""}
             {book.language && ` · ${book.language.toUpperCase()}`}
           </p>
@@ -143,24 +145,35 @@ export default async function BookDetailPage({ params }: PageProps) {
       </div>
 
       <section>
-        <h2 className="text-xs font-bold uppercase tracking-widest mb-4 border-b-4 border-[var(--border)] pb-3">
-          <span className="text-[var(--accent)]">01.</span> Chapters
+        <h2 className="font-display mb-5 border-b border-[var(--border)] pb-3 text-xl font-semibold italic text-[var(--muted-foreground)]">
+          Chapters
         </h2>
-        <div className="space-y-0">
-          {chapters.map((ch) => (
+        <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-sm)]">
+          {chapters.map((ch, i) => (
             <Link
               key={ch.chapterNumber}
               href={`/book/${slug}/read?chapter=${ch.chapterNumber}`}
-              className={`block px-4 py-3 hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors duration-200 text-sm border-b border-[var(--muted)] ${
-                progress && ch.chapterNumber === progress.chapter
-                  ? "border-l-4 border-l-[var(--accent)] font-bold"
-                  : ""
-              }`}
+              className={`group flex items-center px-5 py-3.5 transition-colors duration-150 hover:bg-[var(--accent-soft)] ${
+                i > 0 ? "border-t border-[var(--border)]" : ""
+              } ${progress && ch.chapterNumber === progress.chapter ? "bg-[var(--accent-soft)]" : ""}`}
             >
-              <span className="text-[var(--muted-foreground)] mr-3 uppercase tracking-widest text-xs">
-                {String(ch.chapterNumber).padStart(2, "0")}.
+              <span
+                className={`mr-4 w-7 shrink-0 font-display text-sm italic ${
+                  progress && ch.chapterNumber === progress.chapter
+                    ? "font-bold text-[var(--gold)]"
+                    : "text-[var(--muted-foreground)]/70"
+                }`}
+              >
+                {String(ch.chapterNumber).padStart(2, "0")}
               </span>
-              {ch.title || `Chapter ${ch.chapterNumber}`}
+              <span className="flex-1 truncate text-sm group-hover:text-[var(--accent)]">
+                {ch.title || `Chapter ${ch.chapterNumber}`}
+              </span>
+              {progress && ch.chapterNumber === progress.chapter && (
+                <span className="ml-3 rounded-full bg-[var(--gold)] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+                  Here
+                </span>
+              )}
             </Link>
           ))}
         </div>

@@ -13,11 +13,12 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#000000",
-          color: "#FF3000",
-          fontWeight: 900,
+          backgroundColor: "#1e5c46",
+          color: "#f6f1e7",
+          fontWeight: 700,
+          fontStyle: "italic",
           fontSize: 22,
-          fontFamily: "sans-serif",
+          fontFamily: "Georgia, serif",
         }}
       >
         R

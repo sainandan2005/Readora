@@ -44,24 +44,17 @@ export default function SignupPage() {
   }
 
   return (
-    <main className="min-h-screen flex">
-      {/* Left: Texture (hidden on mobile) */}
-      <div className="hidden lg:block flex-1 bg-[var(--muted)] swiss-diagonal border-r-4 border-[var(--border)]" />
-      {/* Right: Form */}
-      <div className="flex-1 flex items-center justify-center p-8 lg:p-16">
-        <div className="w-full max-w-sm space-y-8">
-          <div>
-            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-2">
-              Create
-              <br />
-              <span className="text-[var(--accent)]">Account</span>
-            </h1>
-            <p className="text-xs uppercase tracking-widest text-[var(--muted-foreground)]">
-              Join Readora to start reading
-            </p>
-          </div>
+    <main className="flex min-h-screen items-center justify-center p-6">
+      <div className="w-full max-w-sm">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow-lg)] sm:p-10">
+          <h1 className="font-display mb-1 text-3xl font-semibold tracking-tight">
+            Create your account
+          </h1>
+          <p className="mb-8 text-sm text-[var(--muted-foreground)]">
+            Join Readora to start reading
+          </p>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <Input
               id="name"
               name="name"
@@ -89,7 +82,7 @@ export default function SignupPage() {
             />
 
             {error && (
-              <p className="text-sm text-[var(--accent)] font-bold">{error}</p>
+              <p className="text-sm font-medium text-[var(--destructive)]">{error}</p>
             )}
 
             <Button type="submit" isLoading={loading} className="w-full">
@@ -97,16 +90,18 @@ export default function SignupPage() {
             </Button>
           </form>
 
-          <p className="text-xs uppercase tracking-widest text-[var(--muted-foreground)]">
+          <p className="mt-6 text-center text-sm text-[var(--muted-foreground)]">
             Already have an account?{" "}
-            <Link
-              href="/login"
-              className="text-[var(--accent)] font-bold hover:underline"
-            >
-              Sign In
+            <Link href="/login" className="font-semibold text-[var(--accent)] hover:underline">
+              Sign in
             </Link>
           </p>
         </div>
+
+        <p className="font-display mt-8 text-center text-sm italic text-[var(--muted-foreground)]">
+          &ldquo;There is no friend as loyal as a book.&rdquo;
+          <span className="mt-1 block text-xs not-italic">— Ernest Hemingway</span>
+        </p>
       </div>
     </main>
   );

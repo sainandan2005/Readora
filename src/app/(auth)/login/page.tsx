@@ -45,64 +45,59 @@ function LoginForm() {
   }
 
   return (
-    <div className="w-full max-w-sm space-y-8">
-      <div>
-        <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-2">
-          Welcome
-          <br />
-          <span className="text-[var(--accent)]">Back</span>
+    <div className="w-full max-w-sm">
+      <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow-lg)] sm:p-10">
+        <h1 className="font-display mb-1 text-3xl font-semibold tracking-tight">
+          Welcome back
         </h1>
-        <p className="text-xs uppercase tracking-widest text-[var(--muted-foreground)]">
+        <p className="mb-8 text-sm text-[var(--muted-foreground)]">
           Sign in to continue reading
+        </p>
+
+        {registered && (
+          <div className="mb-6 rounded-xl border border-[var(--accent)]/30 bg-[var(--accent-soft)] px-4 py-3 text-sm text-[var(--accent)]">
+            Account created — please sign in.
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <Input
+            id="email"
+            name="email"
+            label="Email"
+            type="email"
+            required
+            autoComplete="email"
+          />
+          <Input
+            id="password"
+            name="password"
+            label="Password"
+            type="password"
+            required
+            autoComplete="current-password"
+          />
+
+          {error && (
+            <p className="text-sm font-medium text-[var(--destructive)]">{error}</p>
+          )}
+
+          <Button type="submit" isLoading={loading} className="w-full">
+            Sign In
+          </Button>
+        </form>
+
+        <p className="mt-6 text-center text-sm text-[var(--muted-foreground)]">
+          Don&apos;t have an account?{" "}
+          <Link href="/signup" className="font-semibold text-[var(--accent)] hover:underline">
+            Create one
+          </Link>
         </p>
       </div>
 
-      {registered && (
-        <div className="text-sm border-l-4 border-[var(--accent)] pl-4 py-2 bg-[var(--muted)]">
-          <span className="font-bold uppercase tracking-wide text-xs">
-            Account created
-          </span>
-          <span className="text-[var(--muted-foreground)] ml-2 text-xs">
-            — Please sign in.
-          </span>
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <Input
-          id="email"
-          name="email"
-          label="Email"
-          type="email"
-          required
-          autoComplete="email"
-        />
-        <Input
-          id="password"
-          name="password"
-          label="Password"
-          type="password"
-          required
-          autoComplete="current-password"
-        />
-
-        {error && (
-          <p className="text-sm text-[var(--accent)] font-bold">{error}</p>
-        )}
-
-        <Button type="submit" isLoading={loading} className="w-full">
-          Sign In
-        </Button>
-      </form>
-
-      <p className="text-xs uppercase tracking-widest text-[var(--muted-foreground)]">
-        Don&apos;t have an account?{" "}
-        <Link
-          href="/signup"
-          className="text-[var(--accent)] font-bold hover:underline"
-        >
-          Sign Up
-        </Link>
+      <p className="font-display mt-8 text-center text-sm italic text-[var(--muted-foreground)]">
+        &ldquo;A reader lives a thousand lives before he dies.&rdquo;
+        <span className="mt-1 block text-xs not-italic">— George R. R. Martin</span>
       </p>
     </div>
   );
@@ -110,19 +105,10 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <main className="min-h-screen flex">
-      {/* Left: Form */}
-      <div className="flex-1 flex items-center justify-center p-8 lg:p-16">
-        <Suspense
-          fallback={
-            <div className="text-xs uppercase tracking-widest">Loading...</div>
-          }
-        >
-          <LoginForm />
-        </Suspense>
-      </div>
-      {/* Right: Texture (hidden on mobile) */}
-      <div className="hidden lg:block flex-1 bg-[var(--muted)] swiss-dots border-l-4 border-[var(--border)]" />
+    <main className="flex min-h-screen items-center justify-center p-6">
+      <Suspense fallback={<div className="text-sm text-[var(--muted-foreground)]">Loading…</div>}>
+        <LoginForm />
+      </Suspense>
     </main>
   );
 }

@@ -1,20 +1,50 @@
 @import "tailwindcss";
 
 /* ===========================
-   SWISS INTERNATIONAL DESIGN SYSTEM
-   Design Tokens & Foundation
+   MODERN LIBRARY DESIGN SYSTEM
+   Warm paper, serif display, soft depth
    =========================== */
 
 :root {
-  --background: #FFFFFF;
-  --foreground: #000000;
-  --muted: #F2F2F2;
-  --muted-foreground: #555555;
-  --border: #000000;
-  --accent: #FF3000;
-  --accent-foreground: #FFFFFF;
-  --destructive: #FF3000;
-  --destructive-foreground: #FFFFFF;
+  --background: #f6f1e7;
+  --surface: #fdfbf6;
+  --surface-raised: #ffffff;
+  --foreground: #2a2118;
+  --muted: #ede4d3;
+  --muted-foreground: #8a7a64;
+  --border: #dfd4bd;
+  --border-strong: #cfc2a6;
+  --accent: #1e5c46;
+  --accent-hover: #174a38;
+  --accent-foreground: #f6f1e7;
+  --accent-soft: #e3ece5;
+  --gold: #b08a3e;
+  --destructive: #b3402f;
+  --destructive-foreground: #fdfbf6;
+  --shadow-sm: 0 1px 2px rgba(42, 33, 24, 0.05);
+  --shadow-md: 0 1px 3px rgba(42, 33, 24, 0.06), 0 8px 24px -12px rgba(42, 33, 24, 0.14);
+  --shadow-lg: 0 2px 6px rgba(42, 33, 24, 0.07), 0 16px 40px -16px rgba(42, 33, 24, 0.22);
+}
+
+.dark {
+  --background: #161310;
+  --surface: #211b15;
+  --surface-raised: #28211a;
+  --foreground: #efe7d8;
+  --muted: #292218;
+  --muted-foreground: #9c8d77;
+  --border: #362d21;
+  --border-strong: #46392a;
+  --accent: #5cb98f;
+  --accent-hover: #72c9a1;
+  --accent-foreground: #10231b;
+  --accent-soft: #22352b;
+  --gold: #d2a65a;
+  --destructive: #e06850;
+  --destructive-foreground: #1a120f;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 1px 3px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.35), 0 16px 40px -16px rgba(0, 0, 0, 0.6);
 }
 
 /* ===========================
@@ -24,69 +54,61 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-inter), "Inter", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+::selection {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.font-display {
+  font-family: var(--font-fraunces), Georgia, "Times New Roman", serif;
+}
+
 /* ===========================
-   Swiss Texture Patterns
+   Texture
    =========================== */
 
-/* 24×24px grid lines at 3% opacity */
-.swiss-grid-pattern {
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-
-/* Radial dot matrix, 16×16px spacing, 4% opacity */
-.swiss-dots {
-  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
-  background-size: 16px 16px;
-}
-
-/* 45-degree repeating diagonal lines */
-.swiss-diagonal {
-  background-image: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 9px,
-    rgba(0, 0, 0, 0.02) 9px,
-    rgba(0, 0, 0, 0.02) 10px
-  );
-}
-
-/* Fractal noise via SVG filter */
-.swiss-noise {
+.paper-noise {
   position: relative;
 }
-.swiss-noise::before {
-  content: '';
+.paper-noise::before {
+  content: "";
   position: absolute;
   inset: 0;
-  opacity: 0.015;
+  opacity: 0.02;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
   z-index: 0;
 }
-.swiss-noise > * {
+.paper-noise > * {
   position: relative;
   z-index: 1;
 }
 
+.paper-dots {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--foreground) 5%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 20px 20px;
+}
+
 /* ===========================
    Reader-specific styles
-   (Preserved for reading comfort)
    =========================== */
 
 .reader-content {
-  line-height: 1.8;
+  line-height: 1.85;
   max-width: 65ch;
   margin: 0 auto;
+  color: var(--foreground);
 }
 
 .reader-content p {
@@ -94,8 +116,19 @@ body {
   text-indent: 1.5em;
 }
 
-.reader-content p:first-child {
+.reader-content > p:first-of-type {
   text-indent: 0;
+}
+
+.reader-content > p:first-of-type::first-letter {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 600;
+  float: left;
+  font-size: 3.4em;
+  line-height: 0.85;
+  padding-right: 0.08em;
+  padding-top: 0.05em;
+  color: var(--accent);
 }
 
 .reader-content h1,
@@ -105,7 +138,8 @@ body {
   text-indent: 0;
   margin-top: 1.5em;
   margin-bottom: 0.5em;
-  font-weight: bold;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 600;
 }
 
 .reader-content h1 { font-size: 1.5em; }
@@ -117,6 +151,29 @@ body {
   height: auto;
   display: block;
   margin: 1.5em auto;
+  border-radius: 0.5rem;
+}
+
+.reader-content blockquote {
+  border-left: 3px solid var(--gold);
+  margin: 1.5em 0;
+  padding-left: 1.25em;
+  font-style: italic;
+  color: var(--muted-foreground);
+}
+
+.reader-content a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+.reader-content hr {
+  border: none;
+  height: 1px;
+  background: var(--border-strong);
+  margin: 2.5em auto;
+  width: 40%;
 }
 
 /* ===========================
@@ -124,7 +181,9 @@ body {
    =========================== */
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

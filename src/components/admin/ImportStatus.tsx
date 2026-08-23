@@ -62,10 +62,8 @@ export default function ImportStatus({ jobId }: ImportStatusProps) {
 
   if (!jobStatus) {
     return (
-      <div className="border-2 border-[var(--border)] p-6">
-        <p className="text-xs uppercase tracking-widest text-[var(--muted-foreground)]">
-          Starting import...
-        </p>
+      <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6">
+        <p className="text-sm text-[var(--muted-foreground)]">Starting import…</p>
       </div>
     );
   }
@@ -75,29 +73,29 @@ export default function ImportStatus({ jobId }: ImportStatusProps) {
   );
 
   return (
-    <div className="border-2 border-[var(--border)] p-6 space-y-4">
+    <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow-sm)]">
       <div className="flex items-center justify-between">
-        <span className="font-bold uppercase tracking-wide text-sm">
-          {processing ? "Importing..." : "Import Complete"}
+        <span className="text-sm font-semibold">
+          {processing ? "Importing…" : "Import complete"}
         </span>
-        <span className="text-xs uppercase tracking-widest text-[var(--muted-foreground)]">
+        <span className="text-xs tabular-nums text-[var(--muted-foreground)]">
           {jobStatus.processedCount} / {jobStatus.totalCount}
         </span>
       </div>
 
-      <div className="w-full bg-[var(--muted)] h-1">
+      <div className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--muted)]">
         <div
-          className="bg-[var(--accent)] h-1 transition-all duration-300"
+          className={`h-full rounded-full transition-all duration-300 ${processing ? "bg-[var(--gold)]" : "bg-[var(--accent)]"}`}
           style={{ width: `${percentage}%` }}
         />
       </div>
 
       {jobStatus.errors.length > 0 && (
         <div className="mt-3">
-          <p className="text-xs font-bold uppercase tracking-widest text-[var(--accent)]">
-            Errors ({jobStatus.errors.length}):
+          <p className="text-xs font-bold uppercase tracking-wider text-[var(--destructive)]">
+            Errors ({jobStatus.errors.length})
           </p>
-          <ul className="text-xs text-[var(--muted-foreground)] mt-2 space-y-1">
+          <ul className="mt-2 space-y-1 text-xs text-[var(--muted-foreground)]">
             {jobStatus.errors.map((err, i) => (
               <li key={i}>
                 ID {err.gutenbergId}: {err.message}

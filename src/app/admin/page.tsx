@@ -18,56 +18,58 @@ export default async function AdminPage() {
   return (
     <div className="space-y-10">
       <div>
-        <h2 className="text-xs font-bold uppercase tracking-widest mb-4">
-          <span className="text-[var(--accent)]">01.</span> Overview
+        <h2 className="font-display mb-4 text-xl font-semibold italic text-[var(--muted-foreground)]">
+          Overview
         </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <StatCard label="Total Books" value={bookCount} />
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <StatCard label="Total books" value={bookCount} />
           <StatCard label="Ready" value={readyCount} />
           <StatCard label="Processing" value={processingCount} />
-          <StatCard label="Failed" value={failedCount} />
+          <StatCard label="Failed" value={failedCount} destructive={failedCount > 0} />
         </div>
       </div>
 
       <div>
-        <div className="flex items-end justify-between mb-4 border-b-4 border-[var(--border)] pb-3">
-          <h3 className="text-xs font-bold uppercase tracking-widest">
-            <span className="text-[var(--accent)]">02.</span> Recent Imports
+        <div className="mb-4 flex items-end justify-between">
+          <h3 className="font-display text-xl font-semibold italic text-[var(--muted-foreground)]">
+            Recent imports
           </h3>
           <Link
             href="/admin/import"
-            className="text-xs font-bold uppercase tracking-widest text-[var(--accent)] hover:underline"
+            className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-5 py-2.5 text-sm font-medium transition-colors duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
           >
-            New Import &rarr;
+            New Import →
           </Link>
         </div>
 
         {recentJobs.length === 0 ? (
-          <p className="text-xs uppercase tracking-widest text-[var(--muted-foreground)]">
+          <p className="rounded-2xl border border-dashed border-[var(--border-strong)] py-12 text-center text-sm italic text-[var(--muted-foreground)]">
             No imports yet.
           </p>
         ) : (
-          <div className="space-y-0">
-            {recentJobs.map((job) => (
+          <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-sm)]">
+            {recentJobs.map((job, i) => (
               <div
                 key={job._id.toString()}
-                className="border-2 border-[var(--border)] p-4 flex items-center justify-between -mt-0.5"
+                className={`flex items-center justify-between px-5 py-4 ${
+                  i > 0 ? "border-t border-[var(--border)]" : ""
+                }`}
               >
                 <div>
-                  <span className="text-sm font-bold">
+                  <span className="text-sm font-semibold">
                     {job.totalCount} book{job.totalCount !== 1 ? "s" : ""}
                   </span>
-                  <span className="text-xs uppercase tracking-widest text-[var(--muted-foreground)] ml-3">
+                  <span className="ml-3 text-xs text-[var(--muted-foreground)]">
                     {job.processedCount}/{job.totalCount} processed
                   </span>
                 </div>
                 <span
-                  className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1 border-2 ${
+                  className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${
                     job.status === "completed"
-                      ? "border-[var(--foreground)] bg-[var(--foreground)] text-[var(--background)]"
+                      ? "bg-[var(--accent-soft)] text-[var(--accent)]"
                       : job.status === "failed"
-                      ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--accent-foreground)]"
-                      : "border-[var(--border)]"
+                      ? "bg-[var(--destructive)]/10 text-[var(--destructive)]"
+                      : "bg-[var(--gold)]/10 text-[var(--gold)]"
                   }`}
                 >
                   {job.status}
@@ -81,11 +83,21 @@ export default async function AdminPage() {
   );
 }
 
-function StatCard({ label, value }: { label: string; value: number }) {
+function StatCard({
+  label,
+  value,
+  destructive = false,
+}: {
+  label: string;
+  value: number;
+  destructive?: boolean;
+}) {
   return (
-    <div className="border-2 border-[var(--border)] p-6 hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors duration-200 group">
-      <p className="text-3xl font-black">{value}</p>
-      <p className="text-xs uppercase tracking-widest text-[var(--muted-foreground)] group-hover:text-[var(--background)] transition-colors duration-200 mt-1">
+    <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow-sm)]">
+      <p className={`font-display text-3xl font-semibold ${destructive && value > 0 ? "text-[var(--destructive)]" : ""}`}>
+        {value}
+      </p>
+      <p className="mt-1 text-xs font-medium uppercase tracking-wider text-[var(--muted-foreground)]">
         {label}
       </p>
     </div>

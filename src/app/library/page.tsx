@@ -106,24 +106,28 @@ export default function LibraryPage() {
   const isFiltered = !!searchQuery;
 
   return (
-    <main className="max-w-5xl mx-auto px-6 py-8 lg:px-8 lg:py-12">
-      <div className="flex items-end justify-between mb-8 border-b-4 border-[var(--border)] pb-4">
-        <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter">
-          Library
-        </h1>
+    <main className="mx-auto max-w-6xl px-6 py-10 lg:px-8 lg:py-14">
+      <div className="mb-10 flex items-end justify-between">
+        <div>
+          <p className="mb-1 text-xs font-semibold uppercase tracking-[0.25em] text-[var(--gold)]">
+            Browse
+          </p>
+          <h1 className="font-display text-4xl font-semibold tracking-tight md:text-5xl">
+            The Library
+          </h1>
+        </div>
         <Link
           href="/bookshelf"
-          className="text-xs font-bold uppercase tracking-widest text-[var(--accent)] hover:underline"
+          className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-5 py-2.5 text-sm font-medium transition-colors duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
         >
-          My Bookshelf &rarr;
+          My Bookshelf →
         </Link>
       </div>
 
       {continueReading.length > 0 && !isFiltered && (
         <section className="mb-12">
-          <h2 className="text-xs font-bold uppercase tracking-widest mb-4">
-            <span className="text-[var(--accent)]">01.</span>{" "}
-            Continue Reading
+          <h2 className="font-display mb-4 text-xl font-semibold italic text-[var(--muted-foreground)]">
+            Continue reading
           </h2>
           <BookGrid
             books={continueReading}
@@ -134,35 +138,34 @@ export default function LibraryPage() {
 
       {recentBooks.length > 0 && !isFiltered && page === 1 && (
         <section className="mb-12">
-          <h2 className="text-xs font-bold uppercase tracking-widest mb-4">
-            <span className="text-[var(--accent)]">02.</span>{" "}
-            Recently Added
+          <h2 className="font-display mb-4 text-xl font-semibold italic text-[var(--muted-foreground)]">
+            Recently added
           </h2>
           <BookGrid books={recentBooks} progressMap={progressMap} />
         </section>
       )}
 
       <section>
-        <div className="mb-6">
+        <div className="mb-8">
           <SearchBar onSearch={handleSearch} />
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             {Array.from({ length: 10 }).map((_, i) => (
               <div key={i} className="animate-pulse">
-                <div className="aspect-[2/3] bg-[var(--muted)] border-2 border-[var(--muted)]" />
-                <div className="mt-2 h-4 bg-[var(--muted)] w-3/4" />
-                <div className="mt-1 h-3 bg-[var(--muted)] w-1/2" />
+                <div className="aspect-[2/3] rounded-xl bg-[var(--muted)]" />
+                <div className="mt-3 h-4 w-3/4 rounded bg-[var(--muted)]" />
+                <div className="mt-1.5 h-3 w-1/2 rounded bg-[var(--muted)]" />
               </div>
             ))}
           </div>
         ) : books.length === 0 ? (
-          <div className="text-center py-16 border-2 border-[var(--border)]">
-            <p className="text-xs uppercase tracking-widest text-[var(--muted-foreground)] mb-4">
+          <div className="rounded-2xl border border-dashed border-[var(--border-strong)] py-16 text-center">
+            <p className="font-display mb-2 text-lg italic text-[var(--muted-foreground)]">
               {searchQuery
-                ? `No books found for "${searchQuery}"`
-                : "No books in the library yet."}
+                ? `Nothing found for “${searchQuery}”`
+                : "The shelves are empty — for now."}
             </p>
             {isFiltered && (
               <button
@@ -170,40 +173,39 @@ export default function LibraryPage() {
                   setSearchQuery("");
                   setPage(1);
                 }}
-                className="text-xs font-bold uppercase tracking-widest text-[var(--accent)] hover:underline"
+                className="text-sm font-semibold text-[var(--accent)] hover:underline"
               >
-                Clear Filters
+                Clear search
               </button>
             )}
           </div>
         ) : (
           <>
-            <h2 className="text-xs font-bold uppercase tracking-widest mb-4">
-              <span className="text-[var(--accent)]">03.</span>{" "}
-              {searchQuery ? "Search Results" : "All Books"}
+            <h2 className="font-display mb-4 text-xl font-semibold italic text-[var(--muted-foreground)]">
+              {searchQuery ? "Search results" : "All books"}
             </h2>
             <BookGrid books={books} progressMap={progressMap} />
           </>
         )}
 
         {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-4 mt-8">
+          <div className="mt-10 flex items-center justify-center gap-4">
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="px-6 py-3 text-xs font-bold uppercase tracking-wide border-2 border-[var(--border)] hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors duration-200 disabled:opacity-30"
+              className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-6 py-2.5 text-sm font-medium transition-colors duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)] disabled:opacity-40"
             >
-              Previous
+              ← Previous
             </button>
-            <span className="text-xs uppercase tracking-widest text-[var(--muted-foreground)]">
+            <span className="text-sm text-[var(--muted-foreground)]">
               {page} / {totalPages}
             </span>
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              className="px-6 py-3 text-xs font-bold uppercase tracking-wide border-2 border-[var(--border)] hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors duration-200 disabled:opacity-30"
+              className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-6 py-2.5 text-sm font-medium transition-colors duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)] disabled:opacity-40"
             >
-              Next
+              Next →
             </button>
           </div>
         )}

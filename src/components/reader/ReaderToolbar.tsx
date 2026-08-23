@@ -34,23 +34,24 @@ export default function ReaderToolbar({
   bookmarkCount,
 }: ReaderToolbarProps) {
   return (
-    <header className="sticky top-0 z-10 bg-[var(--background)] border-b-4 border-[var(--border)] px-4 py-3">
-      <div className="max-w-3xl mx-auto flex items-center justify-between gap-2">
-        <div className="flex items-center gap-3 min-w-0">
+    <header className="sticky top-0 z-10 border-b border-[var(--border)] bg-[var(--background)]/85 px-4 py-3 backdrop-blur-md">
+      <div className="mx-auto flex max-w-3xl items-center justify-between gap-2">
+        <div className="flex min-w-0 items-center gap-2.5">
           <button
             onClick={onBack}
-            className="shrink-0 text-xs font-bold uppercase tracking-widest text-[var(--accent)] hover:underline"
+            className="shrink-0 rounded-full border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-sm text-[var(--muted-foreground)] transition-colors duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+            title="Back to book"
           >
-            &larr;
+            ←
           </button>
           <button
             onClick={onToggleToc}
-            className="shrink-0 px-2 py-1 text-xs font-bold uppercase tracking-wide border-2 border-[var(--border)] hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors duration-200"
+            className="shrink-0 rounded-full border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-xs font-semibold transition-colors duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
             title="Table of Contents (T)"
           >
-            TOC
+            Chapters
           </button>
-          <span className="text-xs font-bold uppercase tracking-wide truncate">
+          <span className="font-display hidden truncate text-sm italic text-[var(--muted-foreground)] sm:inline">
             {bookTitle}
           </span>
         </div>
@@ -58,82 +59,84 @@ export default function ReaderToolbar({
         <div className="flex items-center gap-1">
           {readingTime > 0 && (
             <>
-              <span className="text-[10px] uppercase tracking-widest text-[var(--muted-foreground)] whitespace-nowrap hidden sm:inline">
+              <span className="hidden whitespace-nowrap text-xs text-[var(--muted-foreground)] sm:inline">
                 {readingTime} min
               </span>
-              <div className="w-px h-4 bg-[var(--border)] mx-1 hidden sm:block" />
+              <div className="mx-1 hidden h-4 w-px bg-[var(--border)] sm:block" />
             </>
           )}
 
           <button
             onClick={() => onChapterChange(currentChapter - 1)}
             disabled={currentChapter <= 1}
-            className="px-2 py-1 text-sm font-bold hover:text-[var(--accent)] disabled:opacity-30 transition-colors duration-200"
+            className="px-2 py-1 text-sm font-semibold text-[var(--muted-foreground)] transition-colors duration-200 hover:text-[var(--accent)] disabled:opacity-30"
             title="Previous chapter (Left arrow)"
           >
-            &lsaquo;
+            ‹
           </button>
-          <span className="text-[10px] uppercase tracking-widest text-[var(--muted-foreground)] whitespace-nowrap font-bold">
-            {currentChapter}/{totalChapters}
+          <span className="whitespace-nowrap text-xs font-medium tabular-nums text-[var(--muted-foreground)]">
+            {currentChapter} / {totalChapters}
           </span>
           <button
             onClick={() => onChapterChange(currentChapter + 1)}
             disabled={currentChapter >= totalChapters}
-            className="px-2 py-1 text-sm font-bold hover:text-[var(--accent)] disabled:opacity-30 transition-colors duration-200"
+            className="px-2 py-1 text-sm font-semibold text-[var(--muted-foreground)] transition-colors duration-200 hover:text-[var(--accent)] disabled:opacity-30"
             title="Next chapter (Right arrow)"
           >
-            &rsaquo;
+            ›
           </button>
 
-          <div className="w-px h-4 bg-[var(--border)] mx-1" />
+          <div className="mx-1 h-4 w-px bg-[var(--border)]" />
 
           <button
             onClick={onAddBookmark}
-            className="px-2 py-1 text-[10px] font-bold uppercase tracking-wide hover:text-[var(--accent)] transition-colors duration-200 relative"
+            className="relative rounded-full px-2.5 py-1 text-xs font-medium text-[var(--muted-foreground)] transition-colors duration-200 hover:text-[var(--gold)]"
             title="Add bookmark (B)"
           >
-            BM
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" className="inline">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+            </svg>
             {bookmarkCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-[var(--accent)] text-[var(--accent-foreground)] text-[9px] flex items-center justify-center font-bold">
+              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[var(--gold)] text-[9px] font-bold text-white">
                 {bookmarkCount}
               </span>
             )}
           </button>
 
-          <div className="w-px h-4 bg-[var(--border)] mx-1" />
+          <div className="mx-1 h-4 w-px bg-[var(--border)]" />
 
           <button
             onClick={() => onFontSizeChange(Math.max(12, fontSize - 2))}
-            className="px-2 py-1 text-xs font-bold hover:text-[var(--accent)] transition-colors duration-200"
+            className="px-2 py-1 text-xs font-semibold text-[var(--muted-foreground)] transition-colors duration-200 hover:text-[var(--accent)]"
             title="Decrease font size"
           >
-            A-
+            A−
           </button>
           <button
             onClick={() => onFontSizeChange(Math.min(28, fontSize + 2))}
-            className="px-2 py-1 text-sm font-bold hover:text-[var(--accent)] transition-colors duration-200"
+            className="px-2 py-1 text-base font-semibold text-[var(--muted-foreground)] transition-colors duration-200 hover:text-[var(--accent)]"
             title="Increase font size"
           >
             A+
           </button>
 
-          <div className="w-px h-4 bg-[var(--border)] mx-1" />
+          <div className="mx-1 hidden h-4 w-px bg-[var(--border)] sm:block" />
 
           <button
             onClick={() =>
               onFontFamilyChange(fontFamily === "serif" ? "sans-serif" : "serif")
             }
-            className="px-2 py-1 text-[10px] font-bold uppercase tracking-wide hover:text-[var(--accent)] transition-colors duration-200"
+            className="hidden rounded-full px-2.5 py-1 text-xs font-medium text-[var(--muted-foreground)] transition-colors duration-200 hover:text-[var(--accent)] sm:inline"
             title={`Switch to ${fontFamily === "serif" ? "sans-serif" : "serif"}`}
           >
             {fontFamily === "serif" ? "Sans" : "Serif"}
           </button>
 
-          <div className="w-px h-4 bg-[var(--border)] mx-1 hidden sm:block" />
+          <div className="mx-1 hidden h-4 w-px bg-[var(--border)] sm:block" />
 
           <button
             onClick={onShowShortcuts}
-            className="px-2 py-1 text-xs font-bold hover:text-[var(--accent)] transition-colors duration-200 hidden sm:block"
+            className="hidden rounded-full px-2 py-1 text-xs font-semibold text-[var(--muted-foreground)] transition-colors duration-200 hover:text-[var(--accent)] sm:block"
             title="Keyboard shortcuts (?)"
           >
             ?

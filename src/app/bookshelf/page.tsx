@@ -36,37 +36,45 @@ export default function BookshelfPage() {
   }, [fetchBookshelf]);
 
   return (
-    <main className="max-w-5xl mx-auto px-6 py-8 lg:px-8 lg:py-12">
-      <div className="flex items-end justify-between mb-8 border-b-4 border-[var(--border)] pb-4">
-        <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter">
-          My Bookshelf
-        </h1>
+    <main className="mx-auto max-w-6xl px-6 py-10 lg:px-8 lg:py-14">
+      <div className="mb-10 flex items-end justify-between">
+        <div>
+          <p className="mb-1 text-xs font-semibold uppercase tracking-[0.25em] text-[var(--gold)]">
+            Saved for later
+          </p>
+          <h1 className="font-display text-4xl font-semibold tracking-tight md:text-5xl">
+            My Bookshelf
+          </h1>
+        </div>
         <Link
           href="/library"
-          className="text-xs font-bold uppercase tracking-widest text-[var(--accent)] hover:underline"
+          className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-5 py-2.5 text-sm font-medium transition-colors duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
         >
-          Browse Library &rarr;
+          Browse Library →
         </Link>
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
           {Array.from({ length: 5 }).map((_, i) => (
             <div key={i} className="animate-pulse">
-              <div className="aspect-[2/3] bg-[var(--muted)] border-2 border-[var(--muted)]" />
-              <div className="mt-2 h-4 bg-[var(--muted)] w-3/4" />
-              <div className="mt-1 h-3 bg-[var(--muted)] w-1/2" />
+              <div className="aspect-[2/3] rounded-xl bg-[var(--muted)]" />
+              <div className="mt-3 h-4 w-3/4 rounded bg-[var(--muted)]" />
+              <div className="mt-1.5 h-3 w-1/2 rounded bg-[var(--muted)]" />
             </div>
           ))}
         </div>
       ) : books.length === 0 ? (
-        <div className="text-center py-16 border-2 border-[var(--border)]">
-          <p className="text-xs uppercase tracking-widest text-[var(--muted-foreground)] mb-6">
+        <div className="rounded-2xl border border-dashed border-[var(--border-strong)] py-16 text-center">
+          <p className="font-display mb-2 text-lg italic text-[var(--muted-foreground)]">
             Your bookshelf is empty.
+          </p>
+          <p className="mb-6 text-sm text-[var(--muted-foreground)]/80">
+            Save books while browsing to build your collection.
           </p>
           <Link
             href="/library"
-            className="px-8 py-4 bg-[var(--foreground)] text-[var(--background)] font-bold uppercase tracking-wide text-xs hover:bg-[var(--accent)] transition-colors duration-200 inline-block"
+            className="inline-block rounded-full bg-[var(--accent)] px-8 py-3.5 text-sm font-semibold text-[var(--accent-foreground)] transition-all duration-200 hover:bg-[var(--accent-hover)]"
           >
             Browse the Library
           </Link>

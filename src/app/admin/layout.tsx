@@ -14,17 +14,17 @@ export default async function AdminLayout({
 
   return (
     <div className="min-h-screen">
-      <header className="border-b-4 border-[var(--border)] px-6 py-4">
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <h1 className="font-black text-lg uppercase tracking-tight">
+      <header className="border-b border-[var(--border)] bg-[var(--surface)]/70 px-6 py-4 backdrop-blur-sm">
+        <div className="mx-auto flex max-w-5xl items-center justify-between">
+          <h1 className="font-display text-lg font-semibold italic">
             Admin Dashboard
           </h1>
-          <span className="text-xs uppercase tracking-widest text-[var(--muted-foreground)]">
+          <span className="text-xs text-[var(--muted-foreground)]">
             {session.user.email}
           </span>
         </div>
       </header>
-      <div className="max-w-5xl mx-auto p-6">{children}</div>
+      <div className="mx-auto max-w-5xl p-6 lg:p-8">{children}</div>
     </div>
   );
 }

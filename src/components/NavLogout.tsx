@@ -6,7 +6,7 @@ export default function NavLogout() {
   return (
     <button
       onClick={() => signOut({ callbackUrl: "/" })}
-      className="font-bold uppercase tracking-wide text-[var(--foreground)] hover:text-[var(--accent)] transition-colors duration-200"
+      className="rounded-full px-4 py-2 text-sm font-medium text-[var(--muted-foreground)] transition-colors duration-200 hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
     >
       Sign Out
     </button>

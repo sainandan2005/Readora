@@ -21,9 +21,9 @@ export default function BookCard({
   return (
     <Link
       href={`/book/${slug}`}
-      className="group border-2 border-[var(--border)] overflow-hidden hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors duration-200"
+      className="group block transition-transform duration-200 ease-out hover:-translate-y-1"
     >
-      <div className="aspect-[2/3] bg-[var(--muted)] relative">
+      <div className="relative aspect-[2/3] overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--muted)] shadow-[var(--shadow-md)] transition-shadow duration-200 group-hover:shadow-[var(--shadow-lg)]">
         {coverImageUrl ? (
           <Image
             src={coverImageUrl}
@@ -33,29 +33,29 @@ export default function BookCard({
             className="object-cover"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center p-4 swiss-grid-pattern">
-            <span className="text-center text-xs font-bold uppercase tracking-widest text-[var(--muted-foreground)]">
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--accent)] to-[var(--accent-hover)] p-4">
+            <span className="font-display text-center text-sm font-semibold italic leading-snug text-[var(--accent-foreground)]">
               {title}
             </span>
           </div>
         )}
         {progress !== undefined && progress > 0 && (
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-[var(--muted)]">
+          <div className="absolute inset-x-0 bottom-0 h-1.5 bg-black/20 backdrop-blur-sm">
             <div
-              className="h-full bg-[var(--accent)]"
+              className="h-full bg-[var(--gold)] transition-[width]"
               style={{ width: `${progress}%` }}
             />
           </div>
         )}
       </div>
-      <div className="p-3 border-t-2 border-[var(--border)] group-hover:border-[var(--background)]">
-        <h3 className="font-bold text-xs uppercase tracking-wide line-clamp-2 transition-colors duration-200">
+      <div className="px-1 pt-3">
+        <h3 className="font-display line-clamp-2 text-[15px] font-semibold leading-snug text-[var(--foreground)]">
           {title}
         </h3>
-        <p className="text-[10px] uppercase tracking-widest text-[var(--muted-foreground)] group-hover:text-[var(--background)] mt-1 transition-colors duration-200">
+        <p className="mt-0.5 truncate text-xs text-[var(--muted-foreground)]">
           {author}
         </p>
-        <p className="text-[10px] uppercase tracking-widest text-[var(--muted-foreground)] group-hover:text-[var(--background)] transition-colors duration-200">
+        <p className="mt-1 text-[11px] font-medium uppercase tracking-wider text-[var(--muted-foreground)]/70">
           {chapterCount} chapter{chapterCount !== 1 ? "s" : ""}
         </p>
       </div>

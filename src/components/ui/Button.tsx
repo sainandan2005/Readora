@@ -14,15 +14,15 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const base =
-    "px-6 py-3 rounded-none font-bold uppercase tracking-wide text-sm transition-colors duration-200 ease-out disabled:opacity-50 disabled:cursor-not-allowed";
+    "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 ease-out disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]";
 
   const variants = {
     primary:
-      "bg-[var(--foreground)] text-[var(--background)] hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]",
+      "bg-[var(--accent)] text-[var(--accent-foreground)] shadow-[var(--shadow-sm)] hover:bg-[var(--accent-hover)] hover:shadow-[var(--shadow-md)]",
     secondary:
-      "bg-[var(--background)] text-[var(--foreground)] border-2 border-[var(--border)] hover:bg-[var(--foreground)] hover:text-[var(--background)]",
+      "bg-[var(--surface)] text-[var(--foreground)] border border-[var(--border)] hover:border-[var(--border-strong)] hover:bg-[var(--muted)]",
     destructive:
-      "bg-[var(--accent)] text-[var(--accent-foreground)] hover:bg-[var(--foreground)] hover:text-[var(--background)]",
+      "bg-[var(--destructive)] text-[var(--destructive-foreground)] hover:opacity-90",
   };
 
   return (
@@ -31,7 +31,14 @@ export default function Button({
       disabled={disabled || isLoading}
       {...props}
     >
-      {isLoading ? "Loading..." : children}
+      {isLoading ? (
+        <>
+          <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent opacity-60" />
+          Loading…
+        </>
+      ) : (
+        children
+      )}
     </button>
   );
 }

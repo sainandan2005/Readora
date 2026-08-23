@@ -294,7 +294,7 @@ export default function ReaderView({
     <div className="min-h-screen">
       {/* Scroll progress bar */}
       <div
-        className="fixed top-0 left-0 h-1 bg-[var(--accent)] z-50 transition-[width] duration-150"
+        className="fixed top-0 left-0 z-50 h-0.5 bg-[var(--gold)] transition-[width] duration-150"
         style={{ width: `${scrollProgress}%` }}
       />
 
@@ -326,37 +326,35 @@ export default function ReaderView({
       {/* Keyboard shortcut overlay */}
       {showShortcuts && (
         <div
-          className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
           onClick={() => setShowShortcuts(false)}
         >
           <div
-            className="bg-[var(--background)] border-2 border-[var(--border)] p-8 max-w-sm w-full"
+            className="w-full max-w-sm rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow-lg)]"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="font-black uppercase tracking-tight text-sm mb-6">
-              Keyboard Shortcuts
+            <h3 className="font-display mb-6 text-lg font-semibold italic">
+              Keyboard shortcuts
             </h3>
             <div className="space-y-3 text-sm">
               {[
-                ["Left Arrow", "Previous chapter"],
-                ["Right Arrow", "Next chapter"],
-                ["T", "Toggle table of contents"],
+                ["←", "Previous chapter"],
+                ["→", "Next chapter"],
+                ["T", "Toggle contents"],
                 ["B", "Add bookmark"],
                 ["?", "Show shortcuts"],
-                ["Esc", "Close overlay"],
+                ["Esc", "Close"],
               ].map(([key, desc]) => (
-                <div key={key} className="flex justify-between items-center">
-                  <kbd className="px-3 py-1 bg-[var(--muted)] text-xs font-mono font-bold uppercase">
+                <div key={key} className="flex items-center justify-between">
+                  <kbd className="rounded-md border border-[var(--border)] bg-[var(--muted)] px-2.5 py-1 font-mono text-xs font-semibold">
                     {key}
                   </kbd>
-                  <span className="text-xs text-[var(--muted-foreground)] uppercase tracking-widest">
-                    {desc}
-                  </span>
+                  <span className="text-xs text-[var(--muted-foreground)]">{desc}</span>
                 </div>
               ))}
             </div>
-            <p className="text-[10px] uppercase tracking-widest text-[var(--muted-foreground)] mt-6">
-              Swipe left/right on mobile for chapter navigation
+            <p className="mt-6 text-[11px] text-[var(--muted-foreground)]/80">
+              Swipe left/right on mobile for chapter navigation.
             </p>
           </div>
         </div>
@@ -376,35 +374,38 @@ export default function ReaderView({
         ) : (
           <>
             {chapterTitle && (
-              <h2
-                className="text-center font-black uppercase tracking-tighter mb-8 text-[var(--muted-foreground)]"
-                style={{
-                  fontSize: `${fontSize + 4}px`,
-                  fontFamily: fontFamilyValue,
-                }}
-              >
-                {chapterTitle}
-              </h2>
+              <>
+                <div className="mx-auto mb-3 h-px w-10 bg-[var(--gold)]" />
+                <h2
+                  className="font-display mx-auto mb-10 max-w-[65ch] text-center font-semibold leading-snug"
+                  style={{
+                    fontSize: `${Math.min(fontSize + 8, 34)}px`,
+                    fontFamily: "var(--font-fraunces), Georgia, serif",
+                  }}
+                >
+                  {chapterTitle}
+                </h2>
+              </>
             )}
 
             {/* Bookmarks for current chapter */}
             {currentBookmarks.length > 0 && (
-              <div className="max-w-[65ch] mx-auto mb-6">
+              <div className="mx-auto mb-6 max-w-[65ch]">
                 <div className="flex flex-wrap gap-2">
                   {currentBookmarks.map((bm) => (
                     <span
                       key={bm.id}
-                      className="inline-flex items-center gap-1 px-3 py-1 text-[10px] font-bold uppercase tracking-wide bg-[var(--muted)] border-2 border-[var(--muted)]"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-[var(--gold)]/40 bg-[var(--gold)]/10 px-3 py-1 text-[11px] font-medium text-[var(--gold)]"
                     >
                       <button
                         onClick={() => handleGoToBookmark(bm)}
-                        className="hover:text-[var(--accent)] transition-colors duration-200"
+                        className="transition-opacity hover:opacity-70"
                       >
                         Bookmark
                       </button>
                       <button
                         onClick={() => handleDeleteBookmark(bm.id)}
-                        className="text-[var(--muted-foreground)] hover:text-[var(--accent)] ml-1 transition-colors duration-200"
+                        className="ml-0.5 opacity-60 transition-opacity hover:opacity-100"
                       >
                         &times;
                       </button>
@@ -424,13 +425,13 @@ export default function ReaderView({
               dangerouslySetInnerHTML={{ __html: contentHTML }}
             />
 
-            <div className="max-w-[65ch] mx-auto flex justify-between mt-12 pt-8 border-t-4 border-[var(--border)]">
+            <div className="mx-auto flex max-w-[65ch] items-center justify-between pt-10 mt-14 border-t border-[var(--border)]">
               {chapter > 1 ? (
                 <button
                   onClick={() => handleChapterChange(chapter - 1)}
-                  className="text-xs font-bold uppercase tracking-widest text-[var(--accent)] hover:underline"
+                  className="text-sm font-medium text-[var(--muted-foreground)] transition-colors duration-200 hover:text-[var(--accent)]"
                 >
-                  &larr; Previous Chapter
+                  ← Previous
                 </button>
               ) : (
                 <span />
@@ -438,13 +439,13 @@ export default function ReaderView({
               {chapter < totalChapters ? (
                 <button
                   onClick={() => handleChapterChange(chapter + 1)}
-                  className="text-xs font-bold uppercase tracking-widest text-[var(--accent)] hover:underline"
+                  className="rounded-full bg-[var(--accent)] px-6 py-2.5 text-sm font-semibold text-[var(--accent-foreground)] transition-all duration-200 hover:bg-[var(--accent-hover)]"
                 >
-                  Next Chapter &rarr;
+                  Next chapter →
                 </button>
               ) : (
-                <span className="text-xs uppercase tracking-widest text-[var(--muted-foreground)] font-bold">
-                  End of Book
+                <span className="font-display text-sm italic text-[var(--muted-foreground)]">
+                  The end.
                 </span>
               )}
             </div>

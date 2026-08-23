@@ -14,22 +14,19 @@ export default function Input({
 }: InputProps) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label
-        htmlFor={id}
-        className="text-xs font-bold uppercase tracking-widest"
-      >
+      <label htmlFor={id} className="text-xs font-semibold tracking-wide text-[var(--muted-foreground)]">
         {label}
       </label>
       <input
         id={id}
-        className={`px-4 py-3 rounded-none border-2 border-[var(--border)] bg-[var(--background)] focus:outline-none focus:border-[var(--accent)] transition-colors duration-200 ${
-          error ? "border-[var(--accent)]" : ""
+        className={`rounded-xl border bg-[var(--surface)] px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)]/60 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/30 ${
+          error
+            ? "border-[var(--destructive)]"
+            : "border-[var(--border)] focus:border-[var(--accent)]"
         } ${className}`}
         {...props}
       />
-      {error && (
-        <p className="text-sm text-[var(--accent)] font-medium">{error}</p>
-      )}
+      {error && <p className="text-sm text-[var(--destructive)]">{error}</p>}
     </div>
   );
 }
