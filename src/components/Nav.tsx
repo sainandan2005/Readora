@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import Link from "next/link";
 import NavLogout from "./NavLogout";
 import ThemeToggle from "./ThemeToggle";
+import MobileMenu from "./MobileMenu";
 
 export default async function Nav() {
   const session = await auth();
@@ -48,6 +49,7 @@ export default async function Nav() {
             {session.user.name}
           </span>
           <NavLogout />
+          <MobileMenu isAdmin={session.user.role === "admin"} />
         </div>
       </div>
     </nav>

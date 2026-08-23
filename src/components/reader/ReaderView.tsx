@@ -317,10 +317,13 @@ export default function ReaderView({
 
       <ChapterDrawer
         chapters={chapters}
+        bookmarks={bookmarks}
         currentChapter={chapter}
         open={tocOpen}
         onClose={() => setTocOpen(false)}
         onSelect={handleChapterChange}
+        onGoToBookmark={handleGoToBookmark}
+        onDeleteBookmark={handleDeleteBookmark}
       />
 
       {/* Keyboard shortcut overlay */}
